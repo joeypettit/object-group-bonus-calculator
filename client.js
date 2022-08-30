@@ -44,14 +44,68 @@ console.log('array of employee data: ',  employees );
 // Ask questions when you don't.
 
 
+// employees is an array of objects
+for(let i=0; i<employees.length; i++){
+  let currentEmployee = employees[i];
+  let employeeObject = calculateIndividualEmployeeBonus(currentEmployee);
+  console.log(`Employee ${i} is ${employeeObject.name} Total comp is ${employeeObject.totalCompensation} and total bonus is ${employeeObject.totalBonus}`);
+}
 
 
 // This function will calculate 1 employee's bonus!
-//
-function calculateIndividualEmployeeBonus( employee ) {  
-  // your logic here
-  
-  
-  // return new object with bonus results
 
+
+// employee is an object
+function calculateIndividualEmployeeBonus( employee ) {  
+  
+  let bonusPercentage = 0;
+
+  //~~~~~ items 1-4 on Individual Bonus Rules~~~~~~
+  if(employee.reviewRating <= 2){
+    //no bonus, probably unnecssary
+  }else if(employee.reviewRating === 3){
+    bonusPercentage += 4;
+  }else if(employee.reviewRating === 4){
+    bonusPercentage += 6;
+  }else if(employee.reviewRating === 5){
+    bonusPercentage += 10;
+  }
+
+  //~~~~ items 5 on Individual Bonus Rules~~~~~~
+  
+  if(employee.employeeNumber.length === 4){
+    bonusPercentage += 5;
+  }
+
+  //~~~~ items 6 on Individual Bonus Rules~~~~~~
+  if(employee.annualSalary > 65000){
+    bonusPercentage -= 1;
+  }
+
+
+  //~~~~ items 7 on Individual Bonus Rules~~~~~~
+  if(bonusPercentage > 13){
+    bonusPercentage = 13;
+  } else if (bonusPercentage < 0){
+    bonusPercentage = 0;
+  }
+
+  
+  let totalBonus = employee.annualSalary * (bonusPercentage*.01)
+  let employeeName = employee.name;
+  let totalCompensation = totalBonus + Number(employee.annualSalary);
+
+  let outputObject = {
+    name: employeeName,
+    bonusPercentage: bonusPercentage,
+    totalCompensation: totalCompensation,
+    totalBonus: totalBonus
+  }
+
+  return outputObject;
+  // return new object with bonus results
+  
 }
+
+
+
